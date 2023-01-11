@@ -3,20 +3,15 @@
 package response
 
 type Response struct{
-	message string
-	data    interface{}
+	Message string
+	Data    interface{}
 }
 
 func OK(message string, data interface{}) *Response {
-	return &Response{
-        message: message,
-        data:    data,
-    }
+	return &Response{Message: message, Data: data}
 }
 
+
 func Err(err error) *Response {
-	return &Response{
-        message: err.Error(),
-		data:    nil,
-    }
+	return &Response{Message: err.Error(), Data: nil}
 }

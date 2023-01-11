@@ -1,12 +1,13 @@
 package main
 
 import (
-	//"net/http"
+	"net/http"
 
 	"github.com/Lelo88/EjemploGOWEB/pkg/response"
 	"github.com/Lelo88/EjemploGOWEB/services"
 	"github.com/gin-gonic/gin"
 )
+
 
 func main() {
 	//server
@@ -17,8 +18,8 @@ func main() {
 		//request
 
 		//router
-
-		c.JSON(200, response.OK("succed to websites",services.Get()))
+		websites := services.Get()
+		c.JSON(http.StatusAccepted, response.OK("success",websites))
 	})
 
 	//start
