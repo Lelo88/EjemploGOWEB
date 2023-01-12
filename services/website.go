@@ -1,7 +1,13 @@
 // controlador del modelo
 package services
 
-import "github.com/Lelo88/EjemploGOWEB/services/models"
+import (
+	"errors"
+	"fmt"
+	"github.com/Lelo88/EjemploGOWEB/services/models"
+)
+
+var ErrAlreadyExists = errors.New("item already exists")
 
 var websites = []models.Website{
 	{ID: 1, URL: "https://www.google.com", Host: "google", Category: "search", Protected: false},
@@ -10,7 +16,7 @@ var websites = []models.Website{
 	{ID: 4, URL: "https://www.amazon.com", Host: "amazon", Category: "finance", Protected: true},
 }
 
-//var lastID = 4
+var lastID = 4
 
 //read: devolvemos lo que esta previamente cargado
 func Get() []models.Website{
@@ -21,6 +27,33 @@ func GetByID(){
 	
 }
 
-func Create(){
+func ExistURL(url string) bool{
+	for _, website := range websites {
+        if website.URL == url {
+            return true
+        }
+    }
+    return false
+}
 
+//vamos a crear un nuevo recurso(elemento)
+//con esta funcion podemos pasar un elemento a traves de un post
+//tuvimos que cambiar el retorno de la funcion create
+func Create(url, host, category string, protected bool) (models.Website, error){
+	
+	if ExistURL(url) {
+		return models.Website{}, fmt.Errorf("%w, %s",ErrAlreadyExists, "url not unique")
+	}
+	
+	website := models.Website{
+		ID: lastID ,
+		URL: url,
+		Host: host,
+        Category: category,
+	    Protected: protected,
+    }
+	
+	websites = append(websites, website)
+    lastID++
+	return website, nil
 }

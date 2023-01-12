@@ -13,6 +13,8 @@ func main() {
 	//router
 	sv.GET("/websites", handlers.Get)
 
+	sv.POST("/website", handlers.Create)
+	
 	//start
 	sv.Run()
 }
