@@ -45,6 +45,7 @@ func Create(url, host, category string, protected bool) (models.Website, error){
 		return models.Website{}, fmt.Errorf("%w, %s",ErrAlreadyExists, "url not unique")
 	}
 	
+	lastID++
 	website := models.Website{
 		ID: lastID ,
 		URL: url,
@@ -54,6 +55,6 @@ func Create(url, host, category string, protected bool) (models.Website, error){
     }
 	
 	websites = append(websites, website)
-    lastID++
+    
 	return website, nil
 }
