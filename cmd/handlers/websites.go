@@ -10,10 +10,21 @@ import (
 	"github.com/go-playground/validator"
 )
 
+var SECRET_KEY = "ABC"
+
 func Get (c *gin.Context){
+	
+	//cuando procedemos a realizar el get, enviamos un token de seguridad por el header para realizarlo
+	token := c.GetHeader("token")
+	
+	if token == SECRET_KEY {
+		c.JSON(http.StatusUnauthorized, response.Err(nil))
+		return
+	}
+	
 	//request
 
-	//router
+	//process
 	websites := services.Get()
 	c.JSON(http.StatusAccepted, response.OK("success",websites))
 }

@@ -9,11 +9,11 @@ import (
 func main() {
 	//server
 	sv:= gin.Default()
-	
+	websites := sv.Group("/websites")
 	//router
-	sv.GET("/websites", handlers.Get)
+	websites.GET("/", handlers.Get)
 
-	sv.POST("/website", handlers.Create)
+	websites.POST("/", handlers.Create)
 	
 	//start
 	sv.Run()
